@@ -56,4 +56,5 @@
         ["clsx\\(([^)]*)\\)", "(?:'|\")([^'\"]*)(?:'|\")"],
         ["cn\\(([^)]*)\\)", "(?:'|\")([^'\"]*)(?:'|\")"]
     ],
+    "terminal.integrated.defaultProfile.windows": "Git Bash"
 }
