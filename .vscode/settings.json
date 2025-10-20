@@ -1,0 +1,59 @@
+{
+    "editor.acceptSuggestionOnEnter": "smart",
+    "editor.autoIndent": "full",
+    "editor.codeLens": true,
+    "editor.inlineSuggest.enabled": true,
+    "editor.quickSuggestions": {
+        "comments": true,
+        "other": "on",
+        "strings": true
+    },
+    "editor.suggest.showClasses": true,
+    "editor.suggest.showKeywords": true,
+    "editor.suggest.showMethods": true,
+    "editor.suggest.showModules": true,
+    "editor.suggest.showVariables": true,
+    "editor.suggest.showWords": true,
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.suggestOnTriggerCharacters": true,
+    "editor.defaultFormatter": "biomejs.biome",
+    "editor.codeActionsOnSave": {
+        "source.sortImports": "always",
+        "source.removeUnusedImports": "always",
+        "source.addMissingImports.ts": "always",
+        "source.fixAll.ts": "always",
+        "source.fixAll": "always",
+        "source.fixAll.eslint": "always",
+        "source.organizeImports": "always"
+    },
+    "editor.formatOnSave": true,
+    "explorer.compactFolders": false,
+    "files.exclude": {
+        "node_modules": true,
+        ".next": true,
+        "dist": true,
+        "coverage": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true
+    },
+    "files.watcherExclude": {
+        "**/node_modules/**": true,
+        "**/.next/**": true,
+        "**/dist/**": true,
+        "**/coverage/**": true
+    },
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "typescript.preferences.importModuleSpecifier": "non-relative",
+    "tailwindCSS.includeLanguages": {
+        "plaintext": "html",
+        "javascript": "javascript",
+        "javascriptreact": "javascriptreact",
+        "typescript": "typescript",
+        "typescriptreact": "typescriptreact"
+    },
+    "tailwindCSS.experimental.classRegex": [
+        ["clsx\\(([^)]*)\\)", "(?:'|\")([^'\"]*)(?:'|\")"],
+        ["cn\\(([^)]*)\\)", "(?:'|\")([^'\"]*)(?:'|\")"]
+    ],
+}
