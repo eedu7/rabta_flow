@@ -22,9 +22,9 @@
         "source.removeUnusedImports": "always",
         "source.addMissingImports.ts": "always",
         "source.fixAll.ts": "always",
-        "source.fixAll": "always",
+        "source.fixAll.biome": "explicit",
         "source.fixAll.eslint": "always",
-        "source.organizeImports": "always"
+        "source.organizeImports.biome": "explicit"
     },
     "editor.formatOnSave": true,
     "explorer.compactFolders": false,
