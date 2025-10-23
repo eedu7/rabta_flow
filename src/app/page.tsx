@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import LogoutButton from "@/app/logout-button";
 import { requireAuth } from "@/lib/auth-utils";
 import { caller } from "@/trpc/server";
 
@@ -10,7 +10,7 @@ export default async function Home() {
     return (
         <div className="h-screen max-w-7xl mx-auto flex justify-center items-center">
             <pre>{JSON.stringify(data, null, 2)}</pre>
-            <Button>Logout</Button>
+            <LogoutButton />
         </div>
     );
 }
