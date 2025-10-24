@@ -15,6 +15,9 @@ export default function Home() {
             onSuccess: () => {
                 toast.success("AI job queued.");
             },
+            onMutate: () => {
+                toast.success("AI job queued.");
+            },
         }),
     );
 
