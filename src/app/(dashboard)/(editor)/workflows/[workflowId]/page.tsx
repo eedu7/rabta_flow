@@ -9,5 +9,5 @@ interface PageProps {
 export default async function Page({ params }: PageProps) {
     await requireAuth();
     const { workflowId } = await params;
-    return <div>Workflow Id: {workflowId}</div>;
+    return <div>Workflow ID: {workflowId}</div>;
 }
