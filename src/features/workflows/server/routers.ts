@@ -89,8 +89,6 @@ export const workflowsRouter = createTRPCRouter({
                     },
                 }),
                 prisma.workflow.count({
-                    skip: (page - 1) * pageSize,
-                    take: pageSize,
                     where: {
                         userId: ctx.auth.user.id,
                         name: {
