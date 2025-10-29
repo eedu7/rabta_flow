@@ -63,6 +63,11 @@ export function Editor({ workflowId }: { workflowId: string }) {
                 onEdgesChange={onEdgesChange}
                 onInit={setEditor}
                 onNodesChange={onNodesChange}
+                panOnDrag={[1]}
+                panOnScroll
+                selectionOnDrag
+                snapGrid={[10, 10]}
+                snapToGrid
             >
                 <Background />
                 <Controls />
