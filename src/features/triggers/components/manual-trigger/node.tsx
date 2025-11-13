@@ -9,7 +9,7 @@ import { ManualTriggerDialog } from "@/features/triggers/components/manual-trigg
 export const ManualTriggerNode = memo((props: NodeProps) => {
     const [open, onOpenChange] = useState(false);
 
-    const nodeStatus: NodeStatus = "success";
+    const nodeStatus: NodeStatus = "initial";
 
     const handleOpenSettings = () => onOpenChange(true);
     return (

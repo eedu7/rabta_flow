@@ -22,7 +22,7 @@ export const HttpRequestNode = memo((props: NodeProps<HttpRequestNodeType>) => {
     const nodeData = props.data;
     const description = nodeData?.endpoint ? `${nodeData.method || "GET"} : ${nodeData.endpoint}` : "Not configured";
     const handleOpenSettings = () => onOpenChange(true);
-    const nodeStatus: NodeStatus = "loading";
+    const nodeStatus: NodeStatus = "initial";
 
     const handleSubmit = (values: HttpRequestFormValues) => {
         setNodes((nodes) =>
