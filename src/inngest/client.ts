@@ -1,3 +1,4 @@
+import { realtimeMiddleware } from "@inngest/realtime/middleware";
 import { Inngest } from "inngest";
 
-export const inngest = new Inngest({ id: "RabtaFlow" });
+export const inngest = new Inngest({ id: "RabtaFlow", middleware: [realtimeMiddleware()] });
