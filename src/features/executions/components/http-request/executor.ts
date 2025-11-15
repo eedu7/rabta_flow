@@ -17,7 +17,7 @@ type HttpRequestData = {
     body?: string;
 };
 
-export const httpRequestExecutor: NodeExecutor<HttpRequestData> = async ({ data, nodeId, context, step }) => {
+export const httpRequestExecutor: NodeExecutor<HttpRequestData> = async ({ data, nodeId, context, step, publish }) => {
     // TODO: Publish "loading" state for http request
 
     if (!data.endpoint) {
