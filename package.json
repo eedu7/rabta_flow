@@ -9,8 +9,9 @@
         "lint": "biome check",
         "format": "biome format --write",
         "inngest:dev": "npx inngest-cli@latest dev",
-        "dev:all": "mprocs",
-        "studio": "npx prisma studio"
+        "dev:all": "dotenv -- mprocs",
+        "studio": "npx prisma studio",
+        "ngrok:dev": "dotenv -- ngrok http --url=$NGROK_URL 3000"
     },
     "dependencies": {
         "@ai-sdk/anthropic": "^2.0.37",
