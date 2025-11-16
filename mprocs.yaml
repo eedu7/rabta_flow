@@ -7,3 +7,6 @@ procs:
 
   studio:
     cmd: ["npm.cmd", "run", "studio"]
+  
+  ngrok:
+    cmd: ["ngrok", "http", "--url=longhorn-talented-formerly.ngrok-free.app", "3000"]
