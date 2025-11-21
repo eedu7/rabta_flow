@@ -47,6 +47,7 @@ export const sendWorkflowExecution = async (data: { workflowId: string; [key: st
         name: "workflows/execute.workflow",
         data: {
             workflowId: data.workflowId,
+            initialData: data.initialData,
         },
     });
 };

@@ -20,7 +20,6 @@ export async function POST(request: NextRequest) {
         }
 
         const body = await request.json();
-        console.table(body);
 
         const formData = {
             formId: body.formId,
@@ -31,6 +30,7 @@ export async function POST(request: NextRequest) {
             responses: body.responses,
             raw: body,
         };
+
 
         // Trigger an Inngest job
         await sendWorkflowExecution({

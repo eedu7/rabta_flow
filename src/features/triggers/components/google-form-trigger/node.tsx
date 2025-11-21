@@ -26,7 +26,7 @@ export const GoogleFormTriggerNode = memo((props: NodeProps) => {
             <BaseTriggerNode
                 {...props}
                 description="When form is submitted"
-                icon={"/logos/googleform.svg"}
+                icon="/logos/googleform.svg"
                 name="Google Form"
                 onDoubleClick={handleOpenSettings}
                 onSettings={handleOpenSettings}
