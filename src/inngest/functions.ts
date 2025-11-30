@@ -7,6 +7,7 @@ import { manualTriggerChannel } from "@/inngest/channels/manual-trigger";
 import { stripeTriggerChannel } from "@/inngest/channels/stripe-trigger";
 import { topologicalSort } from "@/inngest/utils";
 import prisma from "@/lib/db";
+import { geminiChannel } from "./channels/gemini";
 import { inngest } from "./client";
 
 export const executeWorkflow = inngest.createFunction(
@@ -15,7 +16,13 @@ export const executeWorkflow = inngest.createFunction(
     },
     {
         event: "workflows/execute.workflow",
-        channels: [httpRequestChannel(), manualTriggerChannel(), googleFormTriggerChannel(), stripeTriggerChannel()],
+        channels: [
+            httpRequestChannel(),
+            manualTriggerChannel(),
+            googleFormTriggerChannel(),
+            stripeTriggerChannel(),
+            geminiChannel(),
+        ],
     },
     async ({ event, step, publish }) => {
         const workflowId = event.data.workflowId;
