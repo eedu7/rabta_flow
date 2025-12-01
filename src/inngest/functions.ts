@@ -1,12 +1,15 @@
 import { NonRetriableError } from "inngest";
 import { getExecutor } from "@/features/executions/lib/executor-registry";
 import type { NodeType } from "@/generated/prisma";
+import { anthropicChannel } from "@/inngest/channels/anthropic";
 import { googleFormTriggerChannel } from "@/inngest/channels/google-form-trigger";
 import { httpRequestChannel } from "@/inngest/channels/http-request";
 import { manualTriggerChannel } from "@/inngest/channels/manual-trigger";
+import { openAiChannel } from "@/inngest/channels/openai";
 import { stripeTriggerChannel } from "@/inngest/channels/stripe-trigger";
 import { topologicalSort } from "@/inngest/utils";
 import prisma from "@/lib/db";
+import { geminiChannel } from "./channels/gemini";
 import { inngest } from "./client";
 
 export const executeWorkflow = inngest.createFunction(
@@ -15,7 +18,15 @@ export const executeWorkflow = inngest.createFunction(
     },
     {
         event: "workflows/execute.workflow",
-        channels: [httpRequestChannel(), manualTriggerChannel(), googleFormTriggerChannel(), stripeTriggerChannel()],
+        channels: [
+            httpRequestChannel(),
+            manualTriggerChannel(),
+            googleFormTriggerChannel(),
+            stripeTriggerChannel(),
+            geminiChannel(),
+            openAiChannel(),
+            anthropicChannel(),
+        ],
     },
     async ({ event, step, publish }) => {
         const workflowId = event.data.workflowId;
