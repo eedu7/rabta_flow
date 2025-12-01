@@ -18,7 +18,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 
-export const AVAILABLE_MODELS = ["gemini-2.5-flash", "gemini-2.0-flash"] as const;
+export const AVAILABLE_MODELS = ["claude-opus-4-0", "claude-opus-4-1"] as const;
 
 const formSchema = z.object({
     variableName: z
@@ -33,17 +33,17 @@ const formSchema = z.object({
     userPrompt: z.string().min(1, "User prompt is required"),
 });
 
-export type GeminiFormValues = z.infer<typeof formSchema>;
+export type AnthropicFormValues = z.infer<typeof formSchema>;
 
 interface Props {
     open: boolean;
     onOpenChange: (open: boolean) => void;
     onSubmit: (values: z.infer<typeof formSchema>) => void;
-    defaultValues?: Partial<GeminiFormValues>;
+    defaultValues?: Partial<AnthropicFormValues>;
 }
 
-export const GeminiDialog = ({ onOpenChange, open, onSubmit, defaultValues = {} }: Props) => {
-    const form = useForm<GeminiFormValues>({
+export const AnthropicDialog = ({ onOpenChange, open, onSubmit, defaultValues = {} }: Props) => {
+    const form = useForm<AnthropicFormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             variableName: defaultValues.variableName || "",
@@ -64,9 +64,9 @@ export const GeminiDialog = ({ onOpenChange, open, onSubmit, defaultValues = {} 
         }
     }, [open, defaultValues, form]);
 
-    const watchedVariableName = form.watch("variableName") || "myGemini";
+    const watchedVariableName = form.watch("variableName") || "myAnthropic";
 
-    const handleSubmit = (values: GeminiFormValues) => {
+    const handleSubmit = (values: AnthropicFormValues) => {
         onSubmit(values);
         onOpenChange(false);
     };
@@ -75,7 +75,7 @@ export const GeminiDialog = ({ onOpenChange, open, onSubmit, defaultValues = {} 
         <Dialog onOpenChange={onOpenChange} open={open}>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Gemini Configuration</DialogTitle>
+                    <DialogTitle>Anthropic Configuration</DialogTitle>
                     <DialogDescription>Configure the AI model and prompts for this node.</DialogDescription>
                 </DialogHeader>
                 <Form {...form}>
@@ -87,7 +87,7 @@ export const GeminiDialog = ({ onOpenChange, open, onSubmit, defaultValues = {} 
                                 <FormItem>
                                     <FormLabel>Variable Name</FormLabel>
                                     <FormControl>
-                                        <Input {...field} placeholder="myGemini" />
+                                        <Input {...field} placeholder="myAnthropic" />
                                     </FormControl>
                                     <FormDescription>
                                         Use this name to reference the result in other nodes:{" "}
@@ -117,9 +117,7 @@ export const GeminiDialog = ({ onOpenChange, open, onSubmit, defaultValues = {} 
                                             </SelectContent>
                                         </Select>
                                     </FormControl>
-                                    <FormDescription>
-                                        The Google Gemini model to use for this completion
-                                    </FormDescription>
+                                    <FormDescription>The Anthropic model to use for this completion</FormDescription>
                                 </FormItem>
                             )}
                         />
