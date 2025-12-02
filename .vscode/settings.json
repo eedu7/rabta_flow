@@ -60,5 +60,8 @@
     "typescript.tsdk": "node_modules/typescript/lib",
     "[prisma]": {
         "editor.defaultFormatter": "Prisma.prisma"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
     }
 }
