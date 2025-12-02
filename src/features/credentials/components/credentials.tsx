@@ -1,6 +1,6 @@
 "use client";
 import { formatDistanceToNow } from "date-fns";
-import { WorkflowIcon } from "lucide-react";
+import { KeyIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import type React from "react";
 import {
@@ -19,13 +19,13 @@ import { useCredentialsParams } from "@/features/credentials/hooks/use-credentia
 import type { Credential } from "@/generated/prisma";
 import { useEntitySearch } from "@/hooks/use-entity-search";
 
-export function WorkflowsSearch() {
+export function CredentialsSearch() {
     const [params, setParams] = useCredentialsParams();
     const { onSearchChange, searchValue } = useEntitySearch({
         params,
         setParams,
     });
-    return <EntitySearch onChange={onSearchChange} placeholder="Search workflows" value={searchValue} />;
+    return <EntitySearch onChange={onSearchChange} placeholder="Search credentials" value={searchValue} />;
 }
 
 export function CredentialsList() {
@@ -71,7 +71,7 @@ export function CredentialsContainer({ children }: { children: React.ReactNode }
         <EntityContainer
             header={<CredentialHeader />}
             pagination={<CredentialPagination />}
-            search={<WorkflowsSearch />}
+            search={<CredentialsSearch />}
         >
             {children}
         </EntityContainer>
@@ -114,7 +114,7 @@ export function CredentialItem({ data }: { data: Credential }) {
             href={`/credentials/${data.id}`}
             image={
                 <div className="size-8 flex items-center justify-center">
-                    <WorkflowIcon className="size-5 text-muted-foreground" />
+                    <KeyIcon className="size-5 text-muted-foreground" />
                 </div>
             }
             isRemoving={removeCredential.isPending}
