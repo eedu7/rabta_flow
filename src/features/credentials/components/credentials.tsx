@@ -1,6 +1,6 @@
 "use client";
 import { formatDistanceToNow } from "date-fns";
-import { KeyIcon } from "lucide-react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import type React from "react";
 import {
@@ -16,7 +16,7 @@ import {
 } from "@/components/entity-components";
 import { useRemoveCredential, useSuspenseCredentials } from "@/features/credentials/hooks/use-credentials";
 import { useCredentialsParams } from "@/features/credentials/hooks/use-credentials-params";
-import type { Credential } from "@/generated/prisma";
+import { type Credential, CredentialType } from "@/generated/prisma";
 import { useEntitySearch } from "@/hooks/use-entity-search";
 
 export function CredentialsSearch() {
@@ -100,6 +100,12 @@ export function CredentialEmpty() {
     );
 }
 
+const credentialsLogos: Record<CredentialType, string> = {
+    [CredentialType.OPENAI]: "/logos/openai.svg",
+    [CredentialType.ANTHROPIC]: "/logos/anthropic.svg",
+    [CredentialType.GEMINI]: "/logos/gemini.svg",
+};
+
 export function CredentialItem({ data }: { data: Credential }) {
     const removeCredential = useRemoveCredential();
 
@@ -109,12 +115,14 @@ export function CredentialItem({ data }: { data: Credential }) {
         });
     };
 
+    const logo = credentialsLogos[data.type] || "/logos/openai.svg";
+
     return (
         <EntityItem
             href={`/credentials/${data.id}`}
             image={
                 <div className="size-8 flex items-center justify-center">
-                    <KeyIcon className="size-5 text-muted-foreground" />
+                    <Image alt={data.type} height={20} src={logo} width={20} />
                 </div>
             }
             isRemoving={removeCredential.isPending}

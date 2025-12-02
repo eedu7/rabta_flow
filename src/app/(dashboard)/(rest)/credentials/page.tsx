@@ -28,6 +28,7 @@ export default async function Page({ searchParams }: Props) {
             <HydrateClient>
                 <ErrorBoundary fallback={<CredentialError />}>
                     <Suspense fallback={<CredentialLoading />}>
+                    
                         <CredentialsList />
                     </Suspense>
                 </ErrorBoundary>
