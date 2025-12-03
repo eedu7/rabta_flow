@@ -4,13 +4,14 @@ import { type Node, type NodeProps, useReactFlow } from "@xyflow/react";
 import { memo, useState } from "react";
 import type { NodeStatus } from "@/components/react-flow/node-status-indicator";
 import { fetchOpenAiRealtimeToken } from "@/features/executions/components/openai/actions";
-import { AVAILABLE_MODELS, OpenAiDialog, OpenAiFormValues } from "@/features/executions/components/openai/dialog";
+import { AVAILABLE_MODELS, OpenAiDialog, type OpenAiFormValues } from "@/features/executions/components/openai/dialog";
 import { useNodeStatus } from "@/features/executions/hooks/use-node-status";
 import { OPENAI_CHANNEL_NAME } from "@/inngest/channels/openai";
 import { BaseExecutionNode } from "../base-execution-node";
 
 type OpenAiNodeData = {
     variableName?: string;
+    credentialId?: string;
     model?: string;
     systemPrompt?: string;
     userPrompt?: string;

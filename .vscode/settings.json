@@ -57,5 +57,14 @@
         ["cn\\(([^)]*)\\)", "(?:'|\")([^'\"]*)(?:'|\")"]
     ],
     "terminal.integrated.defaultProfile.windows": "Git Bash",
-    "typescript.tsdk": "node_modules/typescript/lib"
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "[prisma]": {
+        "editor.defaultFormatter": "Prisma.prisma"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "biomejs.biome"
+    },
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "biomejs.biome"
+    }
 }

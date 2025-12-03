@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import Image from "next/image";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
@@ -17,6 +18,8 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel } fr
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { useCredentialByType } from "@/features/credentials/hooks/use-credentials";
+import { CredentialType } from "@/generated/prisma";
 
 export const AVAILABLE_MODELS = ["claude-opus-4-0", "claude-opus-4-1"] as const;
 
@@ -28,6 +31,7 @@ const formSchema = z.object({
             message:
                 "Variable name must start with a letter or underscore and contains only letters, numbers and underscores",
         }),
+    credentialId: z.string().min(1, "Credential is required"),
     model: z.string().min(1, "Model is required"),
     systemPrompt: z.string(),
     userPrompt: z.string().min(1, "User prompt is required"),
@@ -43,10 +47,13 @@ interface Props {
 }
 
 export const AnthropicDialog = ({ onOpenChange, open, onSubmit, defaultValues = {} }: Props) => {
+    const { data: credentials, isLoading: isLoadingCredentials } = useCredentialByType(CredentialType.ANTHROPIC);
+
     const form = useForm<AnthropicFormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             variableName: defaultValues.variableName || "",
+            credentialId: defaultValues.credentialId || "",
             model: defaultValues.model || AVAILABLE_MODELS[0],
             systemPrompt: defaultValues.systemPrompt || "",
             userPrompt: defaultValues.userPrompt || "",
@@ -57,6 +64,7 @@ export const AnthropicDialog = ({ onOpenChange, open, onSubmit, defaultValues = 
         if (open) {
             form.reset({
                 variableName: defaultValues.variableName || "",
+                credentialId: defaultValues.credentialId || "",
                 model: defaultValues.model || AVAILABLE_MODELS[0],
                 systemPrompt: defaultValues.systemPrompt || "",
                 userPrompt: defaultValues.userPrompt || "",
@@ -93,6 +101,43 @@ export const AnthropicDialog = ({ onOpenChange, open, onSubmit, defaultValues = 
                                         Use this name to reference the result in other nodes:{" "}
                                         {`{{${watchedVariableName}.text}}`}
                                     </FormDescription>
+                                </FormItem>
+                            )}
+                        />
+                        {/* Credential Id */}
+                        <FormField
+                            control={form.control}
+                            name="credentialId"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Anthropic Credential</FormLabel>
+                                    <FormControl>
+                                        <Select
+                                            disabled={isLoadingCredentials || !credentials?.length}
+                                            onValueChange={field.onChange}
+                                            value={field.value}
+                                        >
+                                            <SelectTrigger className="w-full">
+                                                <SelectValue placeholder="Select a credential" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {credentials?.map((option) => (
+                                                    <SelectItem key={option.id} value={option.id}>
+                                                        <div className="flex items-center gap-2">
+                                                            <Image
+                                                                alt="Anthropic"
+                                                                height={16}
+                                                                src="/logos/anthropic.svg"
+                                                                width={16}
+                                                            />
+                                                            {option.name}
+                                                        </div>
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                    </FormControl>
+                                    <FormDescription>The Anthropic API key to use for this completion</FormDescription>
                                 </FormItem>
                             )}
                         />
