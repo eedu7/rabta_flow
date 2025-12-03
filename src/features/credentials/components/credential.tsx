@@ -11,7 +11,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useCreateCredential, useUpdateCredential } from "@/features/credentials/hooks/use-credentials";
+import {
+    useCreateCredential,
+    useSuspenseCredential,
+    useUpdateCredential,
+} from "@/features/credentials/hooks/use-credentials";
 import { CredentialType } from "@/generated/prisma";
 import { useUpgradeModal } from "@/hooks/use-upgrade-modal";
 
@@ -173,4 +177,9 @@ export const CredentialForm = ({ initialData }: CredentialFormProps) => {
             </Card>
         </>
     );
+};
+
+export const CredentialView = ({ credentialId }: { credentialId: string }) => {
+    const { data: credential } = useSuspenseCredential(credentialId);
+    return <CredentialForm initialData={credential} />;
 };
