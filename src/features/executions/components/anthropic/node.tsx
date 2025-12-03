@@ -11,6 +11,7 @@ import { AnthropicDialog, type AnthropicFormValues, AVAILABLE_MODELS } from "./d
 
 type AnthropicNodeData = {
     variableName?: string;
+    credentialId?: string;
     model?: string;
     systemPrompt?: string;
     userPrompt?: string;

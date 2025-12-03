@@ -152,7 +152,7 @@ export const CredentialForm = ({ initialData }: CredentialFormProps) => {
                                     <FormItem>
                                         <FormLabel>API Key</FormLabel>
                                         <FormControl>
-                                            <Input placeholder="sk-...." {...field} />
+                                            <Input placeholder="sk-...." {...field} type="password" />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
