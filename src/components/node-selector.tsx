@@ -63,6 +63,12 @@ const executionNodes: NodeTypeOption[] = [
         description: "Uses OpenAI to generate text",
         icon: "/logos/openai.svg",
     },
+    {
+        type: NodeType.DISCORD,
+        label: "Discord",
+        description: "Send a message to discord",
+        icon: "/logos/discord.svg",
+    },
 ];
 interface NodeSelectorProps {
     open: boolean;
