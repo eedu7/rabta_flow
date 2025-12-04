@@ -25,30 +25,25 @@ const formSchema = z.object({
             message:
                 "Variable name must start with a letter or underscore and contains only letters, numbers and underscores",
         }),
-    username: z.string(),
-    content: z
-        .string()
-        .min(1, "Message content is required")
-        .max(2000, "Discord message cannot exceed 2000 characters"),
+    content: z.string().min(1, "Message content is required"),
     webhookUrl: z.string().min(1, "Webhook URL is required"),
 });
 
-export type DiscordFormValues = z.infer<typeof formSchema>;
+export type SlackFormValues = z.infer<typeof formSchema>;
 
 interface Props {
     open: boolean;
     onOpenChange: (open: boolean) => void;
     onSubmit: (values: z.infer<typeof formSchema>) => void;
-    defaultValues?: Partial<DiscordFormValues>;
+    defaultValues?: Partial<SlackFormValues>;
 }
 
-export const DiscordDialog = ({ onOpenChange, open, onSubmit, defaultValues = {} }: Props) => {
-    const form = useForm<DiscordFormValues>({
+export const SlackDialog = ({ onOpenChange, open, onSubmit, defaultValues = {} }: Props) => {
+    const form = useForm<SlackFormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             variableName: defaultValues.variableName || "",
             content: defaultValues.content || "",
-            username: defaultValues.username || "",
             webhookUrl: defaultValues.webhookUrl || "",
         },
     });
@@ -58,15 +53,14 @@ export const DiscordDialog = ({ onOpenChange, open, onSubmit, defaultValues = {}
             form.reset({
                 variableName: defaultValues.variableName || "",
                 content: defaultValues.content || "",
-                username: defaultValues.username || "",
                 webhookUrl: defaultValues.webhookUrl || "",
             });
         }
     }, [open, defaultValues, form]);
 
-    const watchedVariableName = form.watch("variableName") || "myDiscord";
+    const watchedVariableName = form.watch("variableName") || "mySlack";
 
-    const handleSubmit = (values: DiscordFormValues) => {
+    const handleSubmit = (values: SlackFormValues) => {
         onSubmit(values);
         onOpenChange(false);
     };
@@ -75,9 +69,9 @@ export const DiscordDialog = ({ onOpenChange, open, onSubmit, defaultValues = {}
         <Dialog onOpenChange={onOpenChange} open={open}>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Discord Configuration</DialogTitle>
+                    <DialogTitle>Slack Configuration</DialogTitle>
                     <DialogDescription>
-                        Configure the <span className="font-bold">Discord</span> webhook settings for this node.
+                        Configure the <span className="font-bold">Slack</span> webhook settings for this node.
                     </DialogDescription>
                 </DialogHeader>
                 <Form {...form}>
@@ -89,7 +83,7 @@ export const DiscordDialog = ({ onOpenChange, open, onSubmit, defaultValues = {}
                                 <FormItem>
                                     <FormLabel>Variable Name</FormLabel>
                                     <FormControl>
-                                        <Input {...field} placeholder="myDiscord" />
+                                        <Input {...field} placeholder="mySlack" />
                                     </FormControl>
                                     <FormDescription>
                                         Use this name to reference the result in other nodes:{" "}
@@ -106,10 +100,17 @@ export const DiscordDialog = ({ onOpenChange, open, onSubmit, defaultValues = {}
                                 <FormItem>
                                     <FormLabel>Webhook URL</FormLabel>
                                     <FormControl>
-                                        <Input {...field} placeholder="https://discord.com/api/webhooks/..." />
+                                        <Input {...field} placeholder="https://hooks.slack.com/services/..." />
                                     </FormControl>
                                     <FormDescription>
-                                        Get this from Discord: Channel Settings &#8594; Integrations &#8594; Webhooks
+                                        Get this from Slack: Channel Settings &#8594; Workflows &#8594; Webhooks
+                                    </FormDescription>
+                                    <FormDescription>
+                                        Make sure the <span className="font-bold italic">key</span> is{" "}
+                                        <span className="font-bold italic">content</span>
+                                    </FormDescription>
+                                    <FormDescription>
+                                        Make sure you have <span className="font-bold italic">content</span> variable
                                     </FormDescription>
                                 </FormItem>
                             )}
@@ -131,23 +132,6 @@ export const DiscordDialog = ({ onOpenChange, open, onSubmit, defaultValues = {}
                                         The message to send. Use {"{{variables}}"} for simple values or{" "}
                                         {"{{json variables}}"} to stringify objects
                                     </FormDescription>
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="username"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Bot Username (Optional)</FormLabel>
-                                    <FormControl>
-                                        <Textarea
-                                            className="min-h-[80px] font-mono text-sm"
-                                            {...field}
-                                            placeholder="Workflow Bot"
-                                        />
-                                    </FormControl>
-                                    <FormDescription>Override the webhook's default username</FormDescription>
                                 </FormItem>
                             )}
                         />

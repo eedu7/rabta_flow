@@ -7,6 +7,7 @@ import { googleFormTriggerChannel } from "@/inngest/channels/google-form-trigger
 import { httpRequestChannel } from "@/inngest/channels/http-request";
 import { manualTriggerChannel } from "@/inngest/channels/manual-trigger";
 import { openAiChannel } from "@/inngest/channels/openai";
+import { slackChannel } from "@/inngest/channels/slack";
 import { stripeTriggerChannel } from "@/inngest/channels/stripe-trigger";
 import { topologicalSort } from "@/inngest/utils";
 import prisma from "@/lib/db";
@@ -28,6 +29,7 @@ export const executeWorkflow = inngest.createFunction(
             openAiChannel(),
             anthropicChannel(),
             discordChannel(),
+            slackChannel(),
         ],
     },
     async ({ event, step, publish }) => {
