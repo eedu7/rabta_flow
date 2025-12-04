@@ -77,7 +77,7 @@ export const DiscorddDialog = ({ onOpenChange, open, onSubmit, defaultValues = {
                 <DialogHeader>
                     <DialogTitle>Discord Configuration</DialogTitle>
                     <DialogDescription>
-                        Configure the <span className="font-bold">Discrod</span> webhook settings for this node.
+                        Configure the <span className="font-bold">Discord</span> webhook settings for this node.
                     </DialogDescription>
                 </DialogHeader>
                 <Form {...form}>
@@ -119,7 +119,7 @@ export const DiscorddDialog = ({ onOpenChange, open, onSubmit, defaultValues = {
                             name="content"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Message</FormLabel>
+                                    <FormLabel>Content</FormLabel>
                                     <FormControl>
                                         <Textarea
                                             className="min-h-[80px] font-mono text-sm"
