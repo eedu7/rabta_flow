@@ -17,6 +17,7 @@ import { inngest } from "./client";
 export const executeWorkflow = inngest.createFunction(
     {
         id: "execute-workflow",
+        retries: 0, // TODO: Change in production
         onFailure: async ({ event }) => {
             return prisma.execution.update({
                 where: {

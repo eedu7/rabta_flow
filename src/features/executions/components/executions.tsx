@@ -94,9 +94,9 @@ export function ExecutionItem({
         };
     };
 }) {
-    const duration =
-        data.completedAt &&
-        Math.round((new Date(data.completedAt).getTime() - new Date(data.startedAt).getTime()) / 1000);
+    const duration = data.completedAt
+        ? Math.round((new Date(data.completedAt).getTime() - new Date(data.startedAt).getTime()) / 1000)
+        : null;
 
     const subtitle = (
         <>
