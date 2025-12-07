@@ -177,9 +177,9 @@ model Execution {
 
   output Json?
 
-  status    ExecutionStatus @default(RUNNING)
-  error     String?         @db.Text
-  errorType String?         @db.Text
+  status     ExecutionStatus @default(RUNNING)
+  error      String?         @db.Text
+  errorStack String?         @db.Text
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

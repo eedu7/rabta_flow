@@ -80,6 +80,10 @@ const getStatusIcon = (status: ExecutionStatus) => {
     }
 };
 
+const formatStatus = (status: ExecutionStatus) => {
+    return status.charAt(0) + status.slice(1).toLowerCase();
+};
+
 export function ExecutionItem({
     data,
 }: {
@@ -105,7 +109,7 @@ export function ExecutionItem({
             href={`/executions/${data.id}`}
             image={<div className="size-8 flex items-center justify-center">{getStatusIcon(data.status)}</div>}
             subtitle={subtitle}
-            title={data.status}
+            title={formatStatus(data.status)}
         />
     );
 }

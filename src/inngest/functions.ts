@@ -1,6 +1,6 @@
 import { NonRetriableError } from "inngest";
 import { getExecutor } from "@/features/executions/lib/executor-registry";
-import type { NodeType } from "@/generated/prisma";
+import { ExecutionStatus, type NodeType } from "@/generated/prisma";
 import { anthropicChannel } from "@/inngest/channels/anthropic";
 import { discordChannel } from "@/inngest/channels/discord";
 import { googleFormTriggerChannel } from "@/inngest/channels/google-form-trigger";
@@ -17,6 +17,18 @@ import { inngest } from "./client";
 export const executeWorkflow = inngest.createFunction(
     {
         id: "execute-workflow",
+        onFailure: async ({ event }) => {
+            return prisma.execution.update({
+                where: {
+                    inngestEventId: event.data.event.id,
+                },
+                data: {
+                    status: ExecutionStatus.FAILED,
+                    error: event.data.error.message,
+                    errorStack: event.data.error.stack,
+                },
+            });
+        },
     },
     {
         event: "workflows/execute.workflow",
@@ -33,11 +45,21 @@ export const executeWorkflow = inngest.createFunction(
         ],
     },
     async ({ event, step, publish }) => {
+        const inngestEventId = event.id;
         const workflowId = event.data.workflowId;
 
-        if (!workflowId) {
-            throw new NonRetriableError("Workflow ID is missing");
+        if (!inngestEventId || !workflowId) {
+            throw new NonRetriableError("Event ID or Workflow ID is missing");
         }
+
+        await step.run("create-execution", async () => {
+            return prisma.execution.create({
+                data: {
+                    workflowId,
+                    inngestEventId,
+                },
+            });
+        });
 
         const sortedNodes = await step.run("prepare-workflow", async () => {
             const workflow = await prisma.workflow.findUniqueOrThrow({
@@ -80,6 +102,20 @@ export const executeWorkflow = inngest.createFunction(
                 publish,
             });
         }
+
+        await step.run("update-execution", async () => {
+            return prisma.execution.update({
+                where: {
+                    inngestEventId,
+                    workflowId,
+                },
+                data: {
+                    status: ExecutionStatus.SUCCESS,
+                    completedAt: new Date(),
+                    output: context,
+                },
+            });
+        });
 
         return { workflowId, result: context };
     },
